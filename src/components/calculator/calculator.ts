@@ -13,26 +13,22 @@ Vue.use(Vuetify);
 export default class CalculatorComponent extends Vue {
   result: number = 0;
   params: { a: number; b: number } = { a: 0, b: 0 };
-  private add: AddCommand = new AddCommand();
-  private sub: SubCommand = new SubCommand();
-  private times: TimesCommand = new TimesCommand();
   resultText: string = "";
 
   addNumbers() {
-    this.executeCommand(this.add, this.params);
+    this.executeCommand(new AddCommand(this.params));
   }
   subNumbers() {
-    this.executeCommand(this.sub, this.params);
+    this.executeCommand(new SubCommand(this.params));
   }
   timesNumbers() {
-    this.executeCommand(this.times, this.params);
+    this.executeCommand(new TimesCommand(this.params));
   }
 
-  executeCommand(command: any, params: any) {
+  executeCommand(command: any) {
     try {
-      console.log(params);
 
-      const result = command.execute(params);
+      const result = command.execute();
       console.log(result);
       this.resultText = "El resultado es: " + result;
     } catch (error) {
